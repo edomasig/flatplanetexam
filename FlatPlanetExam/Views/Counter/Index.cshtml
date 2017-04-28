@@ -1,0 +1,41 @@
+﻿@model FlatPlanetExam.Models.CounterModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="row">
+    <label id="counter" label-for="Counter">@Model.Counter</label> 
+</div>
+
+<div class="row">
+    <input type="button" class="btn btn-primary" id="countclick" value="Count! " />
+</div>
+
+ 
+@section scripts {
+
+    <script type="text/javascript"> 
+        debugger;
+        $('#countclick').on('click',
+            function() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Counter/_getCount",
+                    data: { 'count': $('#counter').html() },
+                    success: function(result) {
+                        if (result.clickable) {
+                            $("#counter").html(result.Counter);
+                        } else {
+                            alert(" Counter already in maximum");
+                        }
+
+                    }
+                });
+            });
+
+
+    </script>
+
+}
